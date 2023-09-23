@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">rbabu_demoapp</string>
-    <string name="splashGIFdescr">Splash Screen App Name</string>
     <string name="txtHeader">IceBreaker</string>
     <string name="subHeader">Built with Android</string>
     <string name="first_name">First Name</string>
