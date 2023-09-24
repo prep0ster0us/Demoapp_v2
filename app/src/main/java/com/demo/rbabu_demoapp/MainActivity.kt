@@ -18,11 +18,6 @@ class MainActivity : AppCompatActivity() {
         // fetch questions from firestore database (doing ahead of time to avoid async access issues with read/write later on)
         getQuestionsFromFirebase()
 
-        // by default, set visibility of question text, answer field and submit button to be invisible (toggle visibility when random question button is pressed)
-        binding.txtQuestion.visibility = View.INVISIBLE
-        binding.txtAnswer.visibility = View.INVISIBLE
-        binding.btnSubmit.visibility = View.INVISIBLE
-
         Log.d(TAG, "Entered into onCreate()")
 
         // set binding variable to get data from edit text fields
@@ -32,6 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         val question = binding.txtQuestion
         val answer = binding.txtAnswer
+
+        // by default, set visibility of question text, answer field and submit button to be invisible (toggle visibility when random question button is pressed)
+        question.visibility = View.INVISIBLE
+        answer.visibility = View.INVISIBLE
+        binding.btnSubmit.visibility = View.INVISIBLE
 
         // set action for button press, to fetch random question
         binding.btnGetQuestion.setOnClickListener {
