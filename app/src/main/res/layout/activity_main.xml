@@ -10,10 +10,10 @@
         android:id="@+id/header1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="@string/txtHeader"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,6 @@
         android:inputType="textPersonName"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header2" />
@@ -58,7 +57,6 @@
         android:inputType="textPersonName"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtFirstName" />
@@ -73,7 +71,6 @@
         android:inputType="textPersonName"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtLastName" />
@@ -91,10 +88,11 @@
 
     <TextView
         android:id="@+id/txtQuestion"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:paddingHorizontal="10dp"
+        android:textAlignment="center"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,25 +103,30 @@
         android:id="@+id/txtAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:textSize="20sp"
         android:layout_marginTop="15dp"
-        android:hint="@string/answer_edit_text_hint"
-        app:layout_constraintTop_toBottomOf="@id/txtQuestion"
-        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/answer_placeholder_text"
+        android:paddingHorizontal="20dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="This will have answer"
-        android:textAlignment="center"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtQuestion"
+        tools:text="@string/answer_edit_text_hint" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginTop="35dp"
+        android:bottomLeftRadius="50dp"
+        android:bottomRightRadius="50dp"
+        android:padding="10dp"
         android:text="@string/submit_btn_txt"
-        app:layout_constraintTop_toBottomOf="@id/txtAnswer"
+        android:textSize="15sp"
+        android:topLeftRadius="50dp"
+        android:topRightRadius="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/txtAnswer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

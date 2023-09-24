@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivitySplashScreenBinding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        val binding: ActivitySplashScreenBinding =
+            ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.splashImage.alpha = 0f

@@ -8,4 +8,5 @@
     <string name="button_get_question">Get a random question</string>
     <string name="answer_edit_text_hint">This will contain the answer</string>
     <string name="submit_btn_txt">Submit</string>
+    <string name="answer_placeholder_text">Enter your answer</string>
 </resources>
