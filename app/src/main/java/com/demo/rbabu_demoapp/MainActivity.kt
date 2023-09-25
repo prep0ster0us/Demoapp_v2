@@ -13,8 +13,7 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
     private val TAG = "IceBreakerAndroidF23Tag"
 
-    private val db =
-        Firebase.firestore             // database variable which is connected to our Firestore database
+    private val db = Firebase.firestore             // database variable which is connected to our Firestore database
     private var questionBank: MutableList<Questions>? = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +47,28 @@ class MainActivity : AppCompatActivity() {
             answer.visibility = View.VISIBLE
             binding.btnSubmit.visibility = View.VISIBLE
 
-            // visual log
-            Toast.makeText(this@MainActivity, questionBank?.random().toString(), Toast.LENGTH_SHORT)
-                .show()
-
             // set question textview to display fetched question (from firestore database)
-            binding.txtQuestion.text = this.questionBank?.random()?.questionText
+            question.text = this.questionBank?.random()?.questionText
+
+            // visual log
+            Toast.makeText(this@MainActivity, question.text, Toast.LENGTH_SHORT)
+                .show()
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            Log.d(TAG, "Write user input to database...")
+
+            if (fName.text.isEmpty() or lName.text.isEmpty() or pName.text.isEmpty() or answer.text.isEmpty()) {
+                Log.d(TAG, "One of the input fields is empty!")
+                Toast.makeText(this@MainActivity, "Please fill in all the details before submitting!", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener       // exit from button click
+            }
+
+            writeAnswersToFirebase(fName.text.toString(), lName.text.toString(), pName.text.toString(), answer.text.toString())
         }
     }
+
 
     private fun getQuestionsFromFirebase() {
         Log.d(TAG, "Fetching questions from database...")
@@ -72,6 +85,26 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error fetching documents: =>", exception)
+            }
+    }
+
+    private fun writeAnswersToFirebase(firstName: String, lastName: String, prefName: String, userAnswer: String) {
+        val student = hashMapOf(
+            "firstName" to firstName,
+            "lastName" to lastName,
+            "preferredName" to prefName,
+            "answer" to userAnswer
+        )
+
+        db.collection("students")
+            .add(student)
+            .addOnSuccessListener{ document ->
+                Log.d(TAG, "Document successfully written with ID ${document.id}")
+                Toast.makeText(this@MainActivity, "You're in, $firstName! \n Document ID = ${document.id}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error adding document to database: ", exception)
             }
     }
 }
