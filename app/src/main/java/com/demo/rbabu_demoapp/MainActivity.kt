@@ -9,11 +9,27 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.demo.rbabu_demoapp.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "IceBreakerAndroidF23Tag"
 
-    private val db = Firebase.firestore             // database variable which is connected to our Firestore database
+    private val db =
+        Firebase.firestore             // database variable which is connected to our Firestore database
+
+    private val party = Party(
+        speed = 0f,
+        maxSpeed = 30f,
+        damping = 0.9f,
+        spread = 360,
+        colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+        position = Position.Relative(0.5, 0.5),
+        emitter = Emitter(duration = 50, TimeUnit.MILLISECONDS).max(50)
+    )
     private var questionBank: MutableList<Questions>? = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +76,22 @@ class MainActivity : AppCompatActivity() {
 
             if (fName.text.isEmpty() or lName.text.isEmpty() or pName.text.isEmpty() or answer.text.isEmpty()) {
                 Log.d(TAG, "One of the input fields is empty!")
-                Toast.makeText(this@MainActivity, "Please fill in all the details before submitting!", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this@MainActivity,
+                    "Please fill in all the details before submitting!",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 return@setOnClickListener       // exit from button click
             }
 
-            writeAnswersToFirebase(fName.text.toString(), lName.text.toString(), pName.text.toString(), answer.text.toString())
+            writeAnswersToFirebase(
+                fName.text.toString(),
+                lName.text.toString(),
+                pName.text.toString(),
+                answer.text.toString(),
+                binding.konfettiView
+            )
         }
     }
 
@@ -88,7 +114,13 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun writeAnswersToFirebase(firstName: String, lastName: String, prefName: String, userAnswer: String) {
+    private fun writeAnswersToFirebase(
+        firstName: String,
+        lastName: String,
+        prefName: String,
+        userAnswer: String,
+        konfetti: KonfettiView
+    ) {
         val student = hashMapOf(
             "firstName" to firstName,
             "lastName" to lastName,
@@ -98,10 +130,15 @@ class MainActivity : AppCompatActivity() {
 
         db.collection("students")
             .add(student)
-            .addOnSuccessListener{ document ->
+            .addOnSuccessListener { document ->
                 Log.d(TAG, "Document successfully written with ID ${document.id}")
-                Toast.makeText(this@MainActivity, "You're in, $firstName! \n Document ID = ${document.id}", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this@MainActivity,
+                    "You're in, $firstName! \n Document ID = ${document.id}",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
+                konfetti.start(party)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document to database: ", exception)

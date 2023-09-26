@@ -57,4 +57,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+
+    //confetti animation (custom)
+    implementation("nl.dionsegijn:konfetti-xml:2.0.3")
 }

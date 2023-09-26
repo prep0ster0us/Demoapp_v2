@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/header1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:text="@string/txtHeader"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -118,13 +123,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:bottomLeftRadius="50dp"
-        android:bottomRightRadius="50dp"
-        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/submit_btn_txt"
         android:textSize="15sp"
-        android:topLeftRadius="50dp"
-        android:topRightRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtAnswer" />
