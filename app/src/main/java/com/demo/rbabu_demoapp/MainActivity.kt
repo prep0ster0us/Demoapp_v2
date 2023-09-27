@@ -1,9 +1,14 @@
 package com.demo.rbabu_demoapp
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.demo.rbabu_demoapp.databinding.ActivityMainBinding
@@ -138,6 +143,16 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+
+                // show dialog box for successful database entry
+                val dialog = Dialog(this)
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setCancelable(true)
+                dialog.setContentView(R.layout.submit_dialog)
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.show()
+
+                // show confetti animation (after dialog)
                 konfetti.start(party)
             }
             .addOnFailureListener { exception ->
