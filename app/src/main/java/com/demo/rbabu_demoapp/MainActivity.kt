@@ -2,15 +2,16 @@ package com.demo.rbabu_demoapp
 
 import android.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.demo.rbabu_demoapp.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         emitter = Emitter(duration = 50, TimeUnit.MILLISECONDS).max(50)
     )
     private var questionBank: MutableList<Questions>? = arrayListOf()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -78,9 +79,8 @@ class MainActivity : AppCompatActivity() {
             // set question textview to display fetched question (from firestore database)
             question.text = this.questionBank?.random()?.questionText
 
-            // visual log
-            Toast.makeText(this@MainActivity, question.text, Toast.LENGTH_SHORT)
-                .show()
+            it.hideKeyboard()           // on fetch question button press, hide soft keyboard (so question and answer fields are visible)
+            answer.requestFocus()       // once fetch question button is pressed, shift focus to answer edit text
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -159,12 +159,6 @@ class MainActivity : AppCompatActivity() {
             .add(student)
             .addOnSuccessListener { document ->
                 Log.d(TAG, "Document successfully written with ID ${document.id}")
-                Toast.makeText(
-                    this@MainActivity,
-                    "You're in, $firstName! \n Document ID = ${document.id}",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
 
                 // show dialog box for successful database entry
                 val dialog = Dialog(this)
@@ -176,11 +170,15 @@ class MainActivity : AppCompatActivity() {
 
                 // show confetti animation (after dialog)
                 konfetti.start(party)
-
-                SystemClock.sleep(2000)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document to database: ", exception)
             }
+    }
+
+    private fun View.hideKeyboard() {
+        val inputManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
