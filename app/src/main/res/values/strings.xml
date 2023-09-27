@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">rbabu_demoapp</string>
+    <string name="app_name">Android Demo</string>
     <string name="splashGIFdescr">Splash Screen App Name</string>
     <string name="txtHeader">IceBreaker</string>
     <string name="subHeader">Built with Android</string>
@@ -10,4 +10,5 @@
     <string name="answer_edit_text_hint">This will contain the answer</string>
     <string name="submit_btn_txt">Submit</string>
     <string name="answer_placeholder_text">Enter your answer</string>
+    <string name="title_bar_heading">Demo App</string>
 </resources>

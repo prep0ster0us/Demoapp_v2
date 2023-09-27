@@ -1,5 +1,6 @@
 package com.demo.rbabu_demoapp
 
+import android.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -36,11 +37,17 @@ class MainActivity : AppCompatActivity() {
         emitter = Emitter(duration = 50, TimeUnit.MILLISECONDS).max(50)
     )
     private var questionBank: MutableList<Questions>? = arrayListOf()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        supportActionBar!!.title = "Demo App"
+        // custom text options on activity title bar
+        DISPLAY_SHOW_CUSTOM.also { supportActionBar!!.displayOptions = it }
+        supportActionBar!!.setCustomView(R.layout.titlebarlayout)
 
         // fetch questions from firestore database (doing ahead of time to avoid async access issues with read/write later on)
         getQuestionsFromFirebase()
@@ -97,7 +104,22 @@ class MainActivity : AppCompatActivity() {
                 answer.text.toString(),
                 binding.konfettiView
             )
+            resetFields(binding)
         }
+    }
+
+    private fun resetFields(binding: ActivityMainBinding) {
+        binding.txtQuestion.text = ""
+        binding.txtFirstName.setText("")
+        binding.txtLastName.setText("")
+        binding.txtPrefName.setText("")
+        binding.txtQuestion.text = ""
+        binding.txtAnswer.setText("")
+
+        // toggle visibility (after write to database)
+        binding.txtQuestion.visibility = View.INVISIBLE
+        binding.txtAnswer.visibility = View.INVISIBLE
+        binding.btnSubmit.visibility = View.INVISIBLE
     }
 
 
@@ -154,6 +176,8 @@ class MainActivity : AppCompatActivity() {
 
                 // show confetti animation (after dialog)
                 konfetti.start(party)
+
+                SystemClock.sleep(2000)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document to database: ", exception)
