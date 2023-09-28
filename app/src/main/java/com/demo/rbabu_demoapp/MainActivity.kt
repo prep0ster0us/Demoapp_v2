@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                 fName.text.toString(),
                 lName.text.toString(),
                 pName.text.toString(),
+                question.text.toString(),
                 answer.text.toString(),
                 binding.konfettiView
             )
@@ -145,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         firstName: String,
         lastName: String,
         prefName: String,
+        question: String,
         userAnswer: String,
         konfetti: KonfettiView
     ) {
@@ -152,6 +154,7 @@ class MainActivity : AppCompatActivity() {
             "firstName" to firstName,
             "lastName" to lastName,
             "preferredName" to prefName,
+            "question" to question,
             "answer" to userAnswer
         )
 
